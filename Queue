@@ -1,0 +1,76 @@
+//Queue
+import java.util.Scanner;
+
+public class QueueExample {
+    private int maxSize;
+    private int front;
+    private int rear;
+    private int[] queueArray;
+
+    public QueueExample(int size) {
+        maxSize = size;
+        queueArray = new int[maxSize];
+        front = 0;
+        rear = -1;
+    }
+
+    public void enqueue(int value) {
+        if (rear == maxSize - 1) {
+            System.out.println("Queue is full. Cannot enqueue " + value);
+        } else {
+            queueArray[++rear] = value;
+            System.out.println("Enqueued: " + value);
+        }
+    }
+
+    public int dequeue() {
+        if (front > rear) {
+            System.out.println("Queue is empty.");
+            return -1;
+        } else {
+            int value = queueArray[front++];
+            return value;
+        }
+    }
+
+    public boolean isEmpty() {
+        return front > rear;
+    }
+
+    public boolean isFull() {
+        return rear == maxSize - 1;
+    }
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter the size of the queue: ");
+        int size = input.nextInt();
+        QueueExample queue = new QueueExample(size);
+        do {
+            System.out.print("Enter the element to enqueue: ");
+            int element = input.nextInt();
+            queue.enqueue(element);
+        } while (!queue.isFull());
+        System.out.println("The Queue is Currently Full");
+        while (true) {
+            System.out.print("The Queue is: ");
+            for (int i = queue.front; i <= queue.rear; i++) {
+                System.out.print(queue.queueArray[i] + " ");
+            }
+            System.out.println("");
+            System.out.println("Would you like to Dequeue an element from the queue or stop the program?");
+            System.out.print("1. Dequeue \n2. Stop\n");
+            int choice = input.nextInt();
+            if (choice == 1) {
+                int dequeuedValue = queue.dequeue();
+                if (dequeuedValue != -1) {
+                    System.out.println("Dequeued value: " + dequeuedValue);
+                }
+            } else if (choice == 2) {
+                break;
+            } else {
+                System.out.println("Invalid choice. Please choose 1, 2, or 3.");
+            }
+        }
+    }
+}
